@@ -1,9 +1,16 @@
+import styled from "styled-components";
+import { MainCanvas } from "./components/MainCanvas";
 function App() {
   return (
-    <>
-      <div>프로젝트 세팅!</div>
-    </>
+    <Wrapper>
+      <MainCanvas />
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
 export default App;
