@@ -61,15 +61,43 @@ export const Dancer = () => {
     if (!isEntered) return;
     if (!dancerRef.current) return;
     timeline = gsap.timeline();
-    timeline.from(
-      dancerRef.current.rotation,
-      {
-        duration: 4,
-        y: -4 * Math.PI,
-      },
-      0.5
-    );
-  }, [isEntered]);
+    timeline
+      .from(
+        dancerRef.current.rotation,
+        {
+          duration: 4,
+          y: Math.PI,
+        },
+        0.5
+      )
+      .from(
+        dancerRef.current.position,
+        {
+          duration: 4,
+          x: 3,
+        },
+        "<"
+      )
+      .to(
+        three.camera.position,
+        {
+          duration: 10,
+          x: 2,
+          z: 8,
+        },
+        "<"
+      )
+      .to(three.camera.position, {
+        duration: 10,
+        x: 0,
+        z: 6,
+      })
+      .to(three.camera.position, {
+        duration: 10,
+        x: 0,
+        z: 16,
+      });
+  }, [isEntered, three.camera.position]);
 
   if (isEntered) {
     return (
