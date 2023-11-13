@@ -9,14 +9,15 @@ import React from "react";
 
 export const MovingDOM = () => {
   const isEntered = useRecoilValue(IsEnteredAtom);
-  const article01Ref = useRef < HTMLDivElement > null;
-  const article02Ref = useRef < HTMLDivElement > null;
-  const article03Ref = useRef < HTMLDivElement > null;
-  const article04Ref = useRef < HTMLDivElement > null;
-  const article05Ref = useRef < HTMLDivElement > null;
-  const article06Ref = useRef < HTMLDivElement > null;
-  const article07Ref = useRef < HTMLDivElement > null;
-  const article08Ref = useRef < HTMLDivElement > null;
+  // ! 이 부분을 고치지 않으면 에러가 납니다.
+  const article01Ref = useRef(null);
+  const article02Ref = useRef(null);
+  const article03Ref = useRef(null);
+  const article04Ref = useRef(null);
+  const article05Ref = useRef(null);
+  const article06Ref = useRef(null);
+  const article07Ref = useRef(null);
+  const article08Ref = useRef(null);
 
   if (!isEntered) return null;
   return (

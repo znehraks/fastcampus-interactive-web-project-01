@@ -7,6 +7,7 @@ import { IsEnteredAtom } from "../stores";
 import { Loader } from "./Loader";
 import gsap from "gsap";
 
+let timeline;
 export const Dancer = () => {
   const isEntered = useRecoilValue(IsEnteredAtom);
   const three = useThree();
@@ -17,8 +18,9 @@ export const Dancer = () => {
 
   const scroll = useScroll(); // ScrollControls 하위에 있는 컴포넌트가 사용 가능한 hook
   useFrame(() => {
-    console.log(scroll.offset); // scroll.offset을 통해, 현재 스크롤된 offset을 알 수 있다.(스크롤을 하나도 안하면 0, 끝까지 하면 1)
     if (!isEntered) return;
+    timeline.seek(scroll.offset * timeline.duration());
+    // console.log(scroll.offset); // scroll.offset을 통해, 현재 스크롤된 offset을 알 수 있다.(스크롤을 하나도 안하면 0, 끝까지 하면 1)
   });
 
   useEffect(() => {
@@ -54,6 +56,20 @@ export const Dancer = () => {
       }
     );
   }, [isEntered, three.camera.position, three.camera.rotation]);
+
+  useEffect(() => {
+    if (!isEntered) return;
+    if (!dancerRef.current) return;
+    timeline = gsap.timeline();
+    timeline.from(
+      dancerRef.current.rotation,
+      {
+        duration: 4,
+        y: -4 * Math.PI,
+      },
+      0.5
+    );
+  }, [isEntered]);
 
   if (isEntered) {
     return (
