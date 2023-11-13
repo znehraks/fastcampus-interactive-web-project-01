@@ -2,8 +2,14 @@ import { ScrollControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import { Dancer } from "./Dancer";
+import { Suspense } from "react";
+import { Loader } from "./Loader";
+import { useRecoilValue } from "recoil";
+import { IsEnteredAtom } from "../stores";
+import { MovingDOM } from "./dom/MovingDOM";
 
 export const MainCanvas = () => {
+  const isEntered = useRecoilValue(IsEnteredAtom);
   const aspectRatio = window.innerWidth / window.innerHeight;
   return (
     <Canvas
@@ -19,8 +25,11 @@ export const MainCanvas = () => {
       }}
       scene={{ background: new THREE.Color(0x000000) }}
     >
-      <ScrollControls pages={8} damping={0.25}>
-        <Dancer />
+      <ScrollControls pages={isEntered ? 8 : 0} damping={0.25}>
+        <Suspense fallback={<Loader />}>
+          <MovingDOM />
+          <Dancer />
+        </Suspense>
       </ScrollControls>
     </Canvas>
   );
